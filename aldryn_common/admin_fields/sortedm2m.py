@@ -6,7 +6,7 @@ from itertools import chain
 from django import forms
 from django.template.loader import render_to_string
 from django.urls import NoReverseMatch, reverse
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
@@ -27,7 +27,7 @@ class SortedM2MWidget(sortedm2m.forms.SortedCheckboxSelectMultiple):
         final_attrs = self.build_attrs(attrs, name=name)
 
         # Normalize to strings
-        str_values = [force_text(v) for v in value]
+        str_values = [force_str(v) for v in value]
 
         selected = []
         unselected = []
@@ -46,9 +46,9 @@ class SortedM2MWidget(sortedm2m.forms.SortedCheckboxSelectMultiple):
                 label_for = ''
 
             cb = forms.CheckboxInput(final_attrs, check_test=lambda value: value in str_values)
-            option_value = force_text(option_value)
+            option_value = force_str(option_value)
             rendered_cb = cb.render(name, option_value)
-            option_label = conditional_escape(force_text(option_label))
+            option_label = conditional_escape(force_str(option_label))
 
             try:
                 admin_url = reverse(
