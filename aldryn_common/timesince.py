@@ -1,7 +1,7 @@
 import datetime
 
 from django.utils.timezone import is_aware, utc
-from django.utils.translation import ugettext, ungettext
+from django.utils.translation import gettext
 
 
 def timesince_data(d, now=None, reverse=False):
@@ -24,12 +24,12 @@ def timesince_data(d, now=None, reverse=False):
     all the components are returned as a list of dictionaries.
     """
     chunks = (
-        (60 * 60 * 24 * 365, lambda n: ungettext('year', 'years', n)),
-        (60 * 60 * 24 * 30, lambda n: ungettext('month', 'months', n)),
-        (60 * 60 * 24 * 7, lambda n: ungettext('week', 'weeks', n)),
-        (60 * 60 * 24, lambda n: ungettext('day', 'days', n)),
-        (60 * 60, lambda n: ungettext('hour', 'hours', n)),
-        (60, lambda n: ungettext('minute', 'minutes', n))
+        (60 * 60 * 24 * 365, lambda n: gettext('year', 'years', n)),
+        (60 * 60 * 24 * 30, lambda n: gettext('month', 'months', n)),
+        (60 * 60 * 24 * 7, lambda n: gettext('week', 'weeks', n)),
+        (60 * 60 * 24, lambda n: gettext('day', 'days', n)),
+        (60 * 60, lambda n: gettext('hour', 'hours', n)),
+        (60, lambda n: gettext('minute', 'minutes', n))
     )
     # Convert datetime.date to datetime.datetime for comparison.
     if not isinstance(d, datetime.datetime):
@@ -62,11 +62,11 @@ def timesince_data_single(d, now=None, reverse=False):
     if r:
         return r[0]
     else:
-        return {'number': 0, 'type': ugettext('minutes')}
+        return {'number': 0, 'type': gettext
 
 
 def timesince_text(d, now=None):
-    return ugettext('%(number)d %(type)s') % timesince_data_single(d, now)[0]
+    return gettext
 
 
 def timeuntil_data(d, now=None):
@@ -82,4 +82,4 @@ def timeuntil_data_single(d, now=None):
 
 
 def timeuntil_text(d, now=None):
-    return ugettext('%(number)d %(type)s') % timeuntil_data_nonzero(d, now)[0]
+    return gettext
